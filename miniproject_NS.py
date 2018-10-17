@@ -13,7 +13,7 @@ def clicked():
 
 
 
-#Test comment
+
 
 
 
@@ -35,19 +35,44 @@ label = Label(master=root,
 label.pack()
 
         #De knoppen
-button1 = Button(master=root, text='Ik wil naar Amsterdam', background='#4B0082', command=clicked)
+button1 = Button(master=root,
+                 text='Ik wil naar Amsterdam',
+                 font=('NS Sans', 14, 'bold'),
+                 bg='#4B0082',
+                 fg='white',
+                 command=clicked)
 button1.pack(pady=10)
 
-button2 = Button(master=root, text='Kopen Los kaartje', command=clicked)
+button2 = Button(master=root,
+                 text='Kopen Los kaartje',
+                 font=('NS Sans', 14, 'bold'),
+                 bg='#4B0082',
+                 fg='white',
+                 command=clicked)
 button2.pack(pady=10)
 
-button3 = Button(master=root, text='Kopen OV-Chipkaart', command=clicked)
+button3 = Button(master=root,
+                 text='Kopen OV-Chipkaart',
+                 font=('NS Sans', 14, 'bold'),
+                 bg='#4B0082',
+                 fg='white',
+                 command=clicked)
 button3.pack(pady=10)
 
-button4 = Button(master=root, text='Ik wil naar het Buitenland', command=clicked)
+button4 = Button(master=root,
+                 text='Ik wil naar het Buitenland',
+                 font=('NS Sans', 14, 'bold'),
+                 bg='#4B0082',
+                 fg='white',
+                 command=clicked)
 button4.pack(pady=10)
 
-button5 = Button(master=root, text='Actuele vertrektijden', background='#4B0082', command=clicked)
+button5 = Button(master=root,
+                 text='Actuele vertrektijden',
+                 font=('NS Sans', 14, 'bold'),
+                 bg='#4B0082',
+                 fg='white',
+                 command=clicked)
 button5.pack(pady=10)
 
 #   Venster 1
