@@ -100,26 +100,26 @@ def vertrektijden():
     actueellabel.grid(row=0, column=1)
 
     utrechtlabel = Label(master=topframe,
-                         text='Vertrektijden Utrecht Centraal',
+                         text='Vertrektijden \nUtrecht Centraal',
                          background='#ffc917',
                          foreground='#003082',
                          font=('NS Sans', 16, 'bold'))
-    utrechtlabel.grid(row=1, column=0)
+    utrechtlabel.grid(row=1, column=1)
 
     stationlabel = Label(master=topframe,
                          text='Van welk station wilt u \nde actuele vertrektijden?',
                          background='#ffc917',
                          foreground='#003082',
                          font=('NS Sans', 16, 'bold'))
-    stationlabel.grid(row=1, column=1)
+    stationlabel.grid(row=1, column=0)
 
     # Center widgets
     centerframe.grid_rowconfigure(0, weight=1)
     centerframe.grid_columnconfigure(1, weight=1)
 
-    ctr_left = Frame(centerframe, bg='white')
-    ctr_mid = Frame(centerframe, bg='yellow')
-    ctr_right = Frame(centerframe, bg='green')
+    ctr_left = Frame(centerframe, bg='#ffc917')
+    ctr_mid = Frame(centerframe, bg='#ffc917')
+    ctr_right = Frame(centerframe, bg='#ffc917')
 
     ctr_left.grid(row=0, column=0, sticky="ns")
     ctr_mid.grid(row=0, column=1, sticky="nsew")
@@ -157,7 +157,7 @@ def vertrektijden():
 
 
 
-    resultLabel= Label(master=ctr_left, text="rteyhdrhdfgh")
+    resultLabel= Label(master=ctr_left, text="")
     resultLabel.grid(row=0, rowspan=3)
 
 
