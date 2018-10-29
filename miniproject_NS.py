@@ -1,11 +1,14 @@
 import requests
 import xmltodict
+import ns_api
 from tkinter import *
 import tkinter as tk
 
+
 def api_request():
+    station = input('Van welk station wil je de actuele vertrektijden?: ')
     auth_details = ('Farhad_sayghani@msn.com', 'r_MptU5smHBzB5wKFjw5q76-_6JVo1U9JU-PriJLYZnj4XnBfI7a7A')
-    api_url = 'http://webservices.ns.nl/ns-api-avt?station=ut'
+    api_url = 'http://webservices.ns.nl/ns-api-avt?station=' + station
     response = requests.get(api_url, auth=auth_details)
 
     vertrekXML = xmltodict.parse(response.text)
@@ -14,10 +17,11 @@ def api_request():
     for vertrek in vertrekXML['ActueleVertrekTijden']['VertrekkendeTrein']:
         eindbestemming = vertrek['EindBestemming']
 
-        vertrektijd = vertrek['VertrekTijd']      # 2016-09-27T18:36:00+0200
-        vertrektijd = vertrektijd[11:16]          # 18:36
+        vertrektijd = vertrek['VertrekTijd']  # 2016-09-27T18:36:00+0200
+        vertrektijd = vertrektijd[11:16]  # 18:36
 
-        print('Om '+vertrektijd+' vertrekt een trein naar '+ eindbestemming)
+        print('Om ' + vertrektijd + ' vertrekt een trein naar ' + eindbestemming)
+
 
 # venster voor de niet gebruikte knoppen
 def clicked():
@@ -41,6 +45,7 @@ def clicked():
                    fg='white',
                    command=click.destroy)
     terug.pack(pady=10)
+
 
 def clicked2():
     click2 = tk.Toplevel(root)
@@ -67,7 +72,6 @@ def clicked2():
 
 # nieuw venster voor vertrektijden
 def vertrektijden():
-
     actueel = tk.Toplevel(root)
     actueel.title("Actuele vertrektijden")
     actueel.configure(bg='#ffc917')
@@ -104,14 +108,14 @@ def vertrektijden():
                          background='#ffc917',
                          foreground='#003082',
                          font=('NS Sans', 16, 'bold'))
-    utrechtlabel.grid(row=1, column=1)
+    utrechtlabel.grid(row=1, column=0)
 
     stationlabel = Label(master=topframe,
                          text='Van welk station wilt u \nde actuele vertrektijden?',
                          background='#ffc917',
                          foreground='#003082',
                          font=('NS Sans', 16, 'bold'))
-    stationlabel.grid(row=1, column=0)
+    stationlabel.grid(row=1, column=1)
 
     # Center widgets
     centerframe.grid_rowconfigure(0, weight=1)
@@ -130,7 +134,6 @@ def vertrektijden():
         resultLabel.config(text=result)
         mijnInvoer.delete(0, END)"""
 
-
     # Entry voor het invoeren van gekozen station
 
     entrylabel = Label(master=ctr_mid,
@@ -146,24 +149,18 @@ def vertrektijden():
     mijnInvoer.bind("<Return>")
     mijnInvoer.grid(row=0, column=1)
 
-
-    #Enter knop
-    enterEntry=Button(ctr_mid, text='Zoeken',
-                      font=('NS Sans', 12, 'bold'),
-                      bg='#4B0082',
-                      fg='white',
-                      command=clicked2)
+    # Enter knop
+    enterEntry = Button(ctr_mid, text='Zoeken',
+                        font=('NS Sans', 12, 'bold'),
+                        bg='#4B0082',
+                        fg='white',
+                        command=clicked2)
     enterEntry.grid(row=0, column=2)
 
-
-
-    resultLabel= Label(master=ctr_left, text="")
-    resultLabel.grid(row=0, rowspan=3)
-
-
+    resultLabel = Label(master=ctr_left, text="Result:sdfsdgdasfdgdfgfd ")
+    resultLabel.grid(row=0, column=3, rowspan=3, columnspan=3)
 
     # Right widgets
-
 
     # Knoppen voor de steden
     amsterdam = Button(master=ctr_right,
@@ -211,7 +208,7 @@ def vertrektijden():
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
-                        command=ctr_right,
+                        command=clicked2,
                         height=3,
                         width=10)
     maastricht.grid(row=4, column=4)
@@ -305,7 +302,6 @@ def vertrektijden():
                      height=3,
                      width=10)
     haarlem.grid(row=8, column=5)
-
 
 
 root = Tk()  # Creëer het hoofdschermroot.
