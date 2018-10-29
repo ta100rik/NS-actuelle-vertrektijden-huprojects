@@ -44,8 +44,8 @@ def clicked():
                    command=click.destroy)
     terug.pack(pady=10)
 
-def openutrecht(frame):
-    vertrektijden = api_request('Utrecht')
+def openutrecht(frame,userinput):
+    vertrektijden = api_request(userinput)
     counter = 2
     first = 0
     second = 1
@@ -100,26 +100,27 @@ def clicked2(userinput):
                        font=('NS Sans', 21, 'bold'))
     labelclick.grid(row=0, column=1)
 
-    counter = 2
-    first = 0
-    second = 1
-    third = 2
-    for vertrektijd in vertrektijden:
-        tijd = vertrektijd[0]
-        station = vertrektijd[1]
-        spoor = vertrektijd[2]
-        resultLabel = Label(master=centerframe, text=station, bg='#ffc917', fg='#003082')
-        resultLabel2 = Label(master=centerframe, text=spoor, bg='#ffc917', fg='#003082')
-        resultLabel3 = Label(master=centerframe, text=tijd, bg='#ffc917', fg='#003082')
-        resultLabel.grid(row=counter, column=first)
-        resultLabel2.grid(row=counter, column=second)
-        resultLabel3.grid(row=counter, column=third)
-        counter = 1 + counter
-        if counter == 20:
-            counter = 2
-            first = first + 3
-            second = second + 3
-            third = third + 3
+    # counter = 2
+    # first = 0
+    # second = 1
+    # third = 2
+    openutrecht(centerframe,userinput)
+    # for vertrektijd in vertrektijden:
+    #     tijd = vertrektijd[0]
+    #     station = vertrektijd[1]
+    #     spoor = vertrektijd[2]
+    #     resultLabel = Label(master=centerframe, text=station)
+    #     resultLabel2 = Label(master=centerframe, text=spoor)
+    #     resultLabel3 = Label(master=centerframe, text=tijd)
+    #     resultLabel.grid(row=counter, column=first)
+    #     resultLabel2.grid(row=counter, column=second)
+    #     resultLabel3.grid(row=counter, column=third)
+    #     counter = 1 + counter
+    #     if counter == 20:
+    #         counter = 2
+    #         first = first + 3
+    #         second = second + 3
+    #         third = third + 3
 
     # terugknop met een killfunctie
     terug = Button(master=bottomframe,
@@ -178,8 +179,8 @@ def vertrektijden():
     centerframe.grid_columnconfigure(1, weight=1)
 
    # ctr_left = Frame(centerframe, bg='#ffc917')
-    ctr_mid = Frame(centerframe, bg='#ffc917', borderwidth=1, relief="solid",)
-    openutrecht(ctr_mid)
+    ctr_mid = Frame(centerframe, bg='#ffc917')
+    openutrecht(ctr_mid,'utrecht')
     ctr_right = Frame(centerframe, bg='#ffc917')
 
     #ctr_left.grid(row=0, column=0, sticky="nw")
@@ -215,8 +216,6 @@ def vertrektijden():
                         fg='white',
                         command=lambda: clicked2(mijnInvoer.get()))
     enterEntry.grid(row=2, column=2)
-
-
     # Right widgets
 
     # Knoppen voor de steden
