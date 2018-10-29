@@ -48,7 +48,7 @@ def clicked():
 def clicked2(userinput):
     vertrektijden = api_request(userinput)
     click2 = tk.Toplevel(root)
-    click2.title('Actuale reistijden')
+    click2.title('Actuele vertrektijden')
     click2.configure(bg='#ffc917')
     click2.geometry("800x600")
     labelclick = Label(master=click2,
@@ -56,7 +56,10 @@ def clicked2(userinput):
                        background='#ffc917',
                        foreground='#003082',
                        font=('NS Sans', 21, 'bold'))
-    labelclick.pack()
+    labelclick.grid(row=0, column=1)
+
+    resultLabel= Label(master=click2, text='HOI MENSEN')
+    resultLabel.grid(row=1, column=1)
 
     # terugknop met een killfunctie
     terug = Button(master=click2,
@@ -65,7 +68,7 @@ def clicked2(userinput):
                    bg='#4B0082',
                    fg='white',
                    command=click2.destroy)
-    terug.pack(side=BOTTOM, pady=10)
+    terug.grid(row=3, column=1, pady=10)
 
 
 # nieuw venster voor vertrektijden
