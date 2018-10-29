@@ -62,9 +62,9 @@ def openutrecht(frame,userinput):
             tijd = vertrektijd[0]
             station = vertrektijd[1]
             spoor = vertrektijd[2]
-            resultLabel = Label(master=frame, text=station, bg='#ffc917', fg='#003082')
-            resultLabel2 = Label(master=frame, text=spoor, bg='#ffc917', fg='#003082')
-            resultLabel3 = Label(master=frame, text=tijd, bg='#ffc917', fg='#003082')
+            resultLabel = Label(master=frame, text=station, bg='#ffc917', fg='#003082', font=('NS Sans', 12, 'bold'))
+            resultLabel2 = Label(master=frame, text=spoor, bg='#ffc917', fg='#003082', font=('NS Sans', 12, 'bold'))
+            resultLabel3 = Label(master=frame, text=tijd, bg='#ffc917', fg='#003082', font=('NS Sans', 12, 'bold'))
             resultLabel.grid(row=counter, column=first)
             resultLabel2.grid(row=counter, column=second)
             resultLabel3.grid(row=counter, column=third)
@@ -166,7 +166,7 @@ def vertrektijden():
     centerframe.grid_columnconfigure(1, weight=1)
 
    # ctr_left = Frame(centerframe, bg='#ffc917')
-    ctr_mid = Frame(centerframe, bg='#ffc917')
+    ctr_mid = Frame(centerframe, bg='#ffc917', borderwidth=1, relief='solid')
     openutrecht(ctr_mid,'utrecht')
     ctr_right = Frame(centerframe, bg='#ffc917')
 
@@ -297,11 +297,11 @@ def vertrektijden():
     assen.grid(row=4, column=0)
 
     groningen = Button(master=ctr_right,
-                       text='Groningen',
+                       text='Eindhoven',
                        font=('NS Sans', 12, 'bold'),
                        bg='#4B0082',
                        fg='white',
-                       command=lambda: clicked2('Groningen'),
+                       command=lambda: clicked2('Eindhoven'),
                        height=3,
                        width=10)
     groningen.grid(row=4, column=1)
