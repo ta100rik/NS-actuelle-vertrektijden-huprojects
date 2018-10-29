@@ -54,9 +54,9 @@ def openutrecht(frame):
         tijd = vertrektijd[0]
         station = vertrektijd[1]
         spoor = vertrektijd[2]
-        resultLabel = Label(master=frame, text=station)
-        resultLabel2 = Label(master=frame, text=spoor)
-        resultLabel3 = Label(master=frame, text=tijd)
+        resultLabel = Label(master=frame, text=station, bg='#ffc917', fg='#003082')
+        resultLabel2 = Label(master=frame, text=spoor, bg='#ffc917', fg='#003082')
+        resultLabel3 = Label(master=frame, text=tijd, bg='#ffc917', fg='#003082')
         resultLabel.grid(row=counter, column=first)
         resultLabel2.grid(row=counter, column=second)
         resultLabel3.grid(row=counter, column=third)
@@ -79,7 +79,9 @@ def clicked2(userinput):
                      height=50,
                      pady=3)
     centerframe = Frame(master=click2,
-                        bg='#ffc917')
+                        bg='#ffc917',
+                        borderwidth=1,
+                        relief="solid")
     bottomframe = Frame(master=click2,
                         bg='#ffc917')
 
@@ -106,9 +108,9 @@ def clicked2(userinput):
         tijd = vertrektijd[0]
         station = vertrektijd[1]
         spoor = vertrektijd[2]
-        resultLabel = Label(master=centerframe, text=station)
-        resultLabel2 = Label(master=centerframe, text=spoor)
-        resultLabel3 = Label(master=centerframe, text=tijd)
+        resultLabel = Label(master=centerframe, text=station, bg='#ffc917', fg='#003082')
+        resultLabel2 = Label(master=centerframe, text=spoor, bg='#ffc917', fg='#003082')
+        resultLabel3 = Label(master=centerframe, text=tijd, bg='#ffc917', fg='#003082')
         resultLabel.grid(row=counter, column=first)
         resultLabel2.grid(row=counter, column=second)
         resultLabel3.grid(row=counter, column=third)
@@ -176,7 +178,7 @@ def vertrektijden():
     centerframe.grid_columnconfigure(1, weight=1)
 
    # ctr_left = Frame(centerframe, bg='#ffc917')
-    ctr_mid = Frame(centerframe, bg='#ffc917')
+    ctr_mid = Frame(centerframe, bg='#ffc917', borderwidth=1, relief="solid",)
     openutrecht(ctr_mid)
     ctr_right = Frame(centerframe, bg='#ffc917')
 
@@ -214,8 +216,6 @@ def vertrektijden():
                         command=lambda: clicked2(mijnInvoer.get()))
     enterEntry.grid(row=2, column=2)
 
-    resultLabel = Label(master=ctr_mid, text="Result:sdfsdgdasfdgdfgfd ")
-    resultLabel.grid(row=1, column=0, rowspan=3, columnspan=3)
 
     # Right widgets
 
