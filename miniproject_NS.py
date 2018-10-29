@@ -1,27 +1,25 @@
 import requests
 import xmltodict
-import ns_api
+# import ns_api
 from tkinter import *
 import tkinter as tk
 
 
-def api_request():
-    station = input('Van welk station wil je de actuele vertrektijden?: ')
+def api_request(station):
     auth_details = ('Farhad_sayghani@msn.com', 'r_MptU5smHBzB5wKFjw5q76-_6JVo1U9JU-PriJLYZnj4XnBfI7a7A')
     api_url = 'http://webservices.ns.nl/ns-api-avt?station=' + station
     response = requests.get(api_url, auth=auth_details)
 
     vertrekXML = xmltodict.parse(response.text)
-    print('Dit zijn de vertrekkende treinen:')
-
+    lijst = []
     for vertrek in vertrekXML['ActueleVertrekTijden']['VertrekkendeTrein']:
         eindbestemming = vertrek['EindBestemming']
 
         vertrektijd = vertrek['VertrekTijd']  # 2016-09-27T18:36:00+0200
         vertrektijd = vertrektijd[11:16]  # 18:36
-
-        print('Om ' + vertrektijd + ' vertrekt een trein naar ' + eindbestemming)
-
+        lijst.append([vertrektijd,eindbestemming])
+        # print('Om ' + vertrektijd + ' vertrekt een trein naar ' + eindbestemming)
+    return lijst
 
 # venster voor de niet gebruikte knoppen
 def clicked():
@@ -47,12 +45,12 @@ def clicked():
     terug.pack(pady=10)
 
 
-def clicked2():
+def clicked2(userinput):
+    vertrektijden = api_request(userinput)
     click2 = tk.Toplevel(root)
-    click2.title("Oops")
+    click2.title('Actuale reistijden')
     click2.configure(bg='#ffc917')
     click2.geometry("800x600")
-
     labelclick = Label(master=click2,
                        text='Actuele Vertrektijd',
                        background='#ffc917',
@@ -148,13 +146,12 @@ def vertrektijden():
     mijnInvoer.focus()
     mijnInvoer.bind("<Return>")
     mijnInvoer.grid(row=0, column=1)
-
     # Enter knop
     enterEntry = Button(ctr_mid, text='Zoeken',
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
-                        command=clicked2)
+                        command=lambda: clicked2(mijnInvoer.get()))
     enterEntry.grid(row=0, column=2)
 
     resultLabel = Label(master=ctr_left, text="Result:sdfsdgdasfdgdfgfd ")
