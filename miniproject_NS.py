@@ -51,12 +51,32 @@ def clicked2(userinput):
     click2.title('Actuele vertrektijden')
     click2.configure(bg='#ffc917')
     click2.geometry("800x600")
-    labelclick = Label(master=click2,
+
+    topframe = Frame(master=click2,
+                     bg='#ffc917',
+                     width=800,
+                     height=50,
+                     pady=3)
+    centerframe = Frame(master=click2,
+                        bg='#ffc917')
+    bottomframe = Frame(master=click2,
+                        bg='#ffc917')
+
+    # layout van de main containers
+    click2.grid_rowconfigure(1, weight=1)
+    click2.grid_columnconfigure(0, weight=1)
+
+    topframe.grid(row=0, sticky="ew")
+    centerframe.grid(row=1, sticky="nsew")
+    bottomframe.grid(row=2, sticky='ew')
+
+    labelclick = Label(master=topframe,
                        text='Actuele Vertrektijd - ' + str(userinput),
                        background='#ffc917',
                        foreground='#003082',
                        font=('NS Sans', 21, 'bold'))
     labelclick.grid(row=0, column=1)
+
     counter = 2
     first = 0
     second = 1
@@ -65,12 +85,9 @@ def clicked2(userinput):
         tijd = vertrektijd[0]
         station = vertrektijd[1]
         spoor = vertrektijd[2]
-        # resultLabel= Label(master=click2, text=station)
-        # resultLabel2= Label(master=click2, text=spoor)
-        # resultLabel3= Label(master=click2, text=tijd)
-        resultLabel= Label(master=click2, text=station)
-        resultLabel2= Label(master=click2, text=spoor)
-        resultLabel3= Label(master=click2, text=tijd)
+        resultLabel = Label(master=centerframe, text=station)
+        resultLabel2 = Label(master=centerframe, text=spoor)
+        resultLabel3 = Label(master=centerframe, text=tijd)
         resultLabel.grid(row=counter, column=first)
         resultLabel2.grid(row=counter, column=second)
         resultLabel3.grid(row=counter, column=third)
@@ -80,14 +97,15 @@ def clicked2(userinput):
             first = first + 3
             second = second + 3
             third = third + 3
+
     # terugknop met een killfunctie
-    # terug = Button(master=click2,
-    #                text='Terug',
-    #                font=('NS Sans', 18, 'bold'),
-    #                bg='#4B0082',
-    #                fg='white',
-    #                command=click2.destroy)
-    # terug.grid(row=counter, column=1, pady=10)
+    terug = Button(master=bottomframe,
+                   text='Terug',
+                   font=('NS Sans', 18, 'bold'),
+                   bg='#4B0082',
+                   fg='white',
+                   command=click2.destroy)
+    terug.grid(row=0, column=2)
 
 
 # nieuw venster voor vertrektijden
@@ -121,63 +139,61 @@ def vertrektijden():
                          foreground='#003082',
                          font=('NS Sans', 34, 'bold'))
 
-    actueellabel.grid(row=0, column=1)
+    actueellabel.grid(row=0, column=2, columnspan=4, sticky='nsew')
 
-    utrechtlabel = Label(master=topframe,
-                         text='Vertrektijden \nUtrecht Centraal',
-                         background='#ffc917',
-                         foreground='#003082',
-                         font=('NS Sans', 16, 'bold'))
-    utrechtlabel.grid(row=1, column=0)
+
 
     stationlabel = Label(master=topframe,
                          text='Van welk station wilt u \nde actuele vertrektijden?',
                          background='#ffc917',
                          foreground='#003082',
                          font=('NS Sans', 16, 'bold'))
-    stationlabel.grid(row=1, column=1)
+    stationlabel.grid(row=1, column=0, sticky='nsew')
 
     # Center widgets
     centerframe.grid_rowconfigure(0, weight=1)
     centerframe.grid_columnconfigure(1, weight=1)
 
-    ctr_left = Frame(centerframe, bg='#ffc917')
+   # ctr_left = Frame(centerframe, bg='#ffc917')
     ctr_mid = Frame(centerframe, bg='#ffc917')
     ctr_right = Frame(centerframe, bg='#ffc917')
 
-    ctr_left.grid(row=0, column=0, sticky="ns")
+    #ctr_left.grid(row=0, column=0, sticky="nw")
     ctr_mid.grid(row=0, column=1, sticky="nsew")
-    ctr_right.grid(row=0, column=2, sticky="ns")
+    ctr_right.grid(row=0, column=2, sticky="nw")
 
-    """def returnEntry():
-        result = mijnInvoer.get()
-        resultLabel.config(text=result)
-        mijnInvoer.delete(0, END)"""
 
     # Entry voor het invoeren van gekozen station
 
-    entrylabel = Label(master=ctr_mid,
+    utrechtlabel = Label(master=ctr_mid,
+                         text='Vertrektijden - Utrecht Centraal',
+                         background='#ffc917',
+                         foreground='#003082',
+                         font=('NS Sans', 16, 'bold'))
+    utrechtlabel.grid(row=0, column=0, sticky='nsew')
+
+    entrylabel = Label(master=topframe,
                        text='Voer uw stad in: ',
                        bg='#ffc917',
                        fg='#003082',
                        font=('NS Sans', 11, 'bold'))
-    entrylabel.grid(row=0, column=0)
+    entrylabel.grid(row=2, column=0)
 
     station = StringVar()
-    mijnInvoer = Entry(master=ctr_mid, textvariable=station)
+    mijnInvoer = Entry(master=topframe, textvariable=station)
     mijnInvoer.focus()
     mijnInvoer.bind("<Return>")
-    mijnInvoer.grid(row=0, column=1)
+    mijnInvoer.grid(row=2, column=1)
     # Enter knop
-    enterEntry = Button(ctr_mid, text='Zoeken',
+    enterEntry = Button(topframe, text='Zoeken',
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
                         command=lambda: clicked2(mijnInvoer.get()))
-    enterEntry.grid(row=0, column=2)
+    enterEntry.grid(row=2, column=2)
 
-    resultLabel = Label(master=ctr_left, text="Result:sdfsdgdasfdgdfgfd ")
-    resultLabel.grid(row=0, column=3, rowspan=3, columnspan=3)
+    resultLabel = Label(master=ctr_mid, text="Result:sdfsdgdasfdgdfgfd ")
+    resultLabel.grid(row=1, column=0, rowspan=3, columnspan=3)
 
     # Right widgets
 
@@ -190,7 +206,7 @@ def vertrektijden():
                        command=lambda:clicked2('Amsterdam'),
                        height=3,
                        width=10)
-    amsterdam.grid(row=2, column=4)
+    amsterdam.grid(row=0, column=0)
 
     rotterdam = Button(master=ctr_right,
                        text='Rotterdam',
@@ -200,7 +216,7 @@ def vertrektijden():
                        command=lambda:clicked2('Rotterdam'),
                        height=3,
                        width=10)
-    rotterdam.grid(row=3, column=4)
+    rotterdam.grid(row=0, column=1)
 
     arnhem = Button(master=ctr_right,
                     text='Arnhem',
@@ -210,7 +226,7 @@ def vertrektijden():
                     command=lambda:clicked2('Arnhem'),
                     height=3,
                     width=10)
-    arnhem.grid(row=2, column=5)
+    arnhem.grid(row=1, column=0)
 
     utrecht = Button(master=ctr_right,
                      text='Utrecht',
@@ -220,7 +236,7 @@ def vertrektijden():
                      command=lambda:clicked2('Utrecht'),
                      height=3,
                      width=10)
-    utrecht.grid(row=3, column=5)
+    utrecht.grid(row=1, column=1)
 
     maastricht = Button(master=ctr_right,
                         text='Maastricht',
@@ -230,37 +246,37 @@ def vertrektijden():
                         command=lambda:clicked2('Maastricht'),
                         height=3,
                         width=10)
-    maastricht.grid(row=4, column=4)
+    maastricht.grid(row=2, column=0)
 
     hertogenbosch = Button(master=ctr_right,
                            text='\'s-Hertogen\n-bosch',
                            font=('NS Sans', 12, 'bold'),
                            bg='#4B0082',
                            fg='white',
-                           command=lambda:clicked2('Hertogenbosch'),
+                           command=lambda:clicked2('\'s-Hertogenbosch'),
                            height=3,
                            width=10)
-    hertogenbosch.grid(row=4, column=5)
+    hertogenbosch.grid(row=2, column=1)
 
     lelystad = Button(master=ctr_right,
-                      text='Lelystad',
+                      text='Almere',
                       font=('NS Sans', 12, 'bold'),
                       bg='#4B0082',
                       fg='white',
-                      command=lambda:clicked2('Lelystad'),
+                      command=lambda:clicked2('Almere'),
                       height=3,
                       width=10)
-    lelystad.grid(row=5, column=4)
+    lelystad.grid(row=3, column=0)
 
     zwolle = Button(master=ctr_right,
                     text='Zwolle',
                     font=('NS Sans', 12, 'bold'),
                     bg='#4B0082',
                     fg='white',
-                    command=lambda:clicked2('zwolle'),
+                    command=lambda:clicked2('Zwolle'),
                     height=3,
                     width=10)
-    zwolle.grid(row=5, column=5)
+    zwolle.grid(row=3, column=1)
 
     assen = Button(master=ctr_right,
                    text='Assen',
@@ -270,17 +286,17 @@ def vertrektijden():
                    command=lambda:clicked2('Assen'),
                    height=3,
                    width=10)
-    assen.grid(row=6, column=4)
+    assen.grid(row=4, column=0)
 
     groningen = Button(master=ctr_right,
                        text='Groningen',
                        font=('NS Sans', 12, 'bold'),
                        bg='#4B0082',
                        fg='white',
-                       command=lambda:clicked2('groningen'),
+                       command=lambda: clicked2('Groningen'),
                        height=3,
                        width=10)
-    groningen.grid(row=6, column=5)
+    groningen.grid(row=4, column=1)
 
     leeuwarden = Button(master=ctr_right,
                         text='Leeuwarden',
@@ -290,37 +306,37 @@ def vertrektijden():
                         command=lambda:clicked2('Leeuwarden'),
                         height=3,
                         width=10)
-    leeuwarden.grid(row=7, column=4)
+    leeuwarden.grid(row=5, column=0)
 
     denhaag = Button(master=ctr_right,
                      text='Den Haag',
                      font=('NS Sans', 12, 'bold'),
                      bg='#4B0082',
                      fg='white',
-                     command=clicked,
+                     command=lambda:clicked2('Den Haag'),
                      height=3,
                      width=10)
-    denhaag.grid(row=7, column=5)
+    denhaag.grid(row=5, column=1)
 
     middelburg = Button(master=ctr_right,
                         text='Middelburg',
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
-                        command=lambda:clicked2('Middelburg'),
+                        command=lambda: clicked2('Middelburg'),
                         height=3,
                         width=10)
-    middelburg.grid(row=8, column=4)
+    middelburg.grid(row=6, column=0)
 
     haarlem = Button(master=ctr_right,
                      text='Haarlem',
                      font=('NS Sans', 12, 'bold'),
                      bg='#4B0082',
                      fg='white',
-                     command=lambda:clicked2('Haarlem'),
+                     command=lambda: clicked2('Haarlem'),
                      height=3,
                      width=10)
-    haarlem.grid(row=8, column=5)
+    haarlem.grid(row=6, column=1)
 
 
 root = Tk()  # Creëer het hoofdschermroot.
