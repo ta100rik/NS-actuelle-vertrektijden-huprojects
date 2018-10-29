@@ -187,7 +187,7 @@ def vertrektijden():
                        font=('NS Sans', 12, 'bold'),
                        bg='#4B0082',
                        fg='white',
-                       command=clicked,
+                       command=lambda:clicked2('Amsterdam'),
                        height=3,
                        width=10)
     amsterdam.grid(row=2, column=4)
@@ -197,7 +197,7 @@ def vertrektijden():
                        font=('NS Sans', 12, 'bold'),
                        bg='#4B0082',
                        fg='white',
-                       command=clicked,
+                       command=lambda:clicked2('Rotterdam'),
                        height=3,
                        width=10)
     rotterdam.grid(row=3, column=4)
@@ -207,7 +207,7 @@ def vertrektijden():
                     font=('NS Sans', 12, 'bold'),
                     bg='#4B0082',
                     fg='white',
-                    command=clicked,
+                    command=lambda:clicked2('Arnhem'),
                     height=3,
                     width=10)
     arnhem.grid(row=2, column=5)
@@ -217,7 +217,7 @@ def vertrektijden():
                      font=('NS Sans', 12, 'bold'),
                      bg='#4B0082',
                      fg='white',
-                     command=clicked,
+                     command=lambda:clicked2('Utrecht'),
                      height=3,
                      width=10)
     utrecht.grid(row=3, column=5)
@@ -227,7 +227,7 @@ def vertrektijden():
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
-                        command=clicked2,
+                        command=lambda:clicked2('Maastricht'),
                         height=3,
                         width=10)
     maastricht.grid(row=4, column=4)
@@ -237,7 +237,7 @@ def vertrektijden():
                            font=('NS Sans', 12, 'bold'),
                            bg='#4B0082',
                            fg='white',
-                           command=clicked,
+                           command=lambda:clicked2('Hertogenbosch'),
                            height=3,
                            width=10)
     hertogenbosch.grid(row=4, column=5)
@@ -247,7 +247,7 @@ def vertrektijden():
                       font=('NS Sans', 12, 'bold'),
                       bg='#4B0082',
                       fg='white',
-                      command=clicked,
+                      command=lambda:clicked2('Lelystad'),
                       height=3,
                       width=10)
     lelystad.grid(row=5, column=4)
@@ -257,7 +257,7 @@ def vertrektijden():
                     font=('NS Sans', 12, 'bold'),
                     bg='#4B0082',
                     fg='white',
-                    command=clicked,
+                    command=lambda:clicked2('zwolle'),
                     height=3,
                     width=10)
     zwolle.grid(row=5, column=5)
@@ -267,7 +267,7 @@ def vertrektijden():
                    font=('NS Sans', 12, 'bold'),
                    bg='#4B0082',
                    fg='white',
-                   command=clicked,
+                   command=lambda:clicked2('Assen'),
                    height=3,
                    width=10)
     assen.grid(row=6, column=4)
@@ -277,7 +277,7 @@ def vertrektijden():
                        font=('NS Sans', 12, 'bold'),
                        bg='#4B0082',
                        fg='white',
-                       command=clicked,
+                       command=lambda:clicked2('groningen'),
                        height=3,
                        width=10)
     groningen.grid(row=6, column=5)
@@ -287,7 +287,7 @@ def vertrektijden():
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
-                        command=clicked,
+                        command=lambda:clicked2('Leeuwarden'),
                         height=3,
                         width=10)
     leeuwarden.grid(row=7, column=4)
@@ -307,7 +307,7 @@ def vertrektijden():
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
-                        command=clicked,
+                        command=lambda:clicked2('Middelburg'),
                         height=3,
                         width=10)
     middelburg.grid(row=8, column=4)
@@ -317,7 +317,7 @@ def vertrektijden():
                      font=('NS Sans', 12, 'bold'),
                      bg='#4B0082',
                      fg='white',
-                     command=clicked,
+                     command=lambda:clicked2('Haarlem'),
                      height=3,
                      width=10)
     haarlem.grid(row=8, column=5)
