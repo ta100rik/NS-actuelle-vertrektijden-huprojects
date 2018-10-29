@@ -2,24 +2,31 @@ import requests
 import xmltodict
 # import ns_api
 from tkinter import *
+from tkinter.messagebox import showinfo
 import tkinter as tk
 
+def error():
+    bericht = 'Dit is geen station'
+    showinfo(title='Station',message=bericht)
 
 def api_request(station):
-    auth_details = ('Farhad_sayghani@msn.com', 'r_MptU5smHBzB5wKFjw5q76-_6JVo1U9JU-PriJLYZnj4XnBfI7a7A')
-    api_url = 'http://webservices.ns.nl/ns-api-avt?station=' + station
-    response = requests.get(api_url, auth=auth_details)
-
-    vertrekXML = xmltodict.parse(response.text)
-    lijst = []
-    for vertrek in vertrekXML['ActueleVertrekTijden']['VertrekkendeTrein']:
-        eindbestemming = vertrek['EindBestemming']
-        spoor = vertrek['VertrekSpoor']['#text']
-        vertrektijd = vertrek['VertrekTijd']  # 2016-09-27T18:36:00+0200
-        vertrektijd = vertrektijd[11:16]  # 18:36
-        lijst.append([vertrektijd,eindbestemming,spoor])
-        # print('Om ' + vertrektijd + ' vertrekt een trein naar ' + eindbestemming)
-    return lijst
+    try:
+        auth_details = ('Farhad_sayghani@msn.com', 'r_MptU5smHBzB5wKFjw5q76-_6JVo1U9JU-PriJLYZnj4XnBfI7a7A')
+        api_url = 'http://webservices.ns.nl/ns-api-avt?station=' + station
+        response = requests.get(api_url, auth=auth_details)
+        vertrekXML = xmltodict.parse(response.text)
+        lijst = []
+        for vertrek in vertrekXML['ActueleVertrekTijden']['VertrekkendeTrein']:
+            eindbestemming = vertrek['EindBestemming']
+            spoor = vertrek['VertrekSpoor']['#text']
+            vertrektijd = vertrek['VertrekTijd']  # 2016-09-27T18:36:00+0200
+            vertrektijd = vertrektijd[11:16]  # 18:36
+            lijst.append([vertrektijd,eindbestemming,spoor])
+            # print('Om ' + vertrektijd + ' vertrekt een trein naar ' + eindbestemming)
+        return lijst
+    except:
+        error()
+        return False
 
 # venster voor de niet gebruikte knoppen
 def clicked():
@@ -46,90 +53,70 @@ def clicked():
 
 def openutrecht(frame,userinput):
     vertrektijden = api_request(userinput)
-    counter = 2
-    first = 0
-    second = 1
-    third = 2
-    for vertrektijd in vertrektijden:
-        tijd = vertrektijd[0]
-        station = vertrektijd[1]
-        spoor = vertrektijd[2]
-        resultLabel = Label(master=frame, text=station, bg='#ffc917', fg='#003082')
-        resultLabel2 = Label(master=frame, text=spoor, bg='#ffc917', fg='#003082')
-        resultLabel3 = Label(master=frame, text=tijd, bg='#ffc917', fg='#003082')
-        resultLabel.grid(row=counter, column=first)
-        resultLabel2.grid(row=counter, column=second)
-        resultLabel3.grid(row=counter, column=third)
-        counter = 1 + counter
-        if counter == 20:
-            counter = 2
-            first = first + 3
-            second = second + 3
-            third = third + 3
+    if vertrektijden:
+        counter = 2
+        first = 0
+        second = 1
+        third = 2
+        for vertrektijd in vertrektijden:
+            tijd = vertrektijd[0]
+            station = vertrektijd[1]
+            spoor = vertrektijd[2]
+            resultLabel = Label(master=frame, text=station, bg='#ffc917', fg='#003082')
+            resultLabel2 = Label(master=frame, text=spoor, bg='#ffc917', fg='#003082')
+            resultLabel3 = Label(master=frame, text=tijd, bg='#ffc917', fg='#003082')
+            resultLabel.grid(row=counter, column=first)
+            resultLabel2.grid(row=counter, column=second)
+            resultLabel3.grid(row=counter, column=third)
+            counter = 1 + counter
+            if counter == 20:
+                counter = 2
+                first = first + 3
+                second = second + 3
+                third = third + 3
 def clicked2(userinput):
     vertrektijden = api_request(userinput)
-    click2 = tk.Toplevel(root)
-    click2.title('Actuele vertrektijden')
-    click2.configure(bg='#ffc917')
-    click2.geometry("800x600")
+    if vertrektijden:
+        click2 = tk.Toplevel(root)
+        click2.title('Actuele vertrektijden')
+        click2.configure(bg='#ffc917')
+        click2.geometry("800x600")
 
-    topframe = Frame(master=click2,
-                     bg='#ffc917',
-                     width=800,
-                     height=50,
-                     pady=3)
-    centerframe = Frame(master=click2,
-                        bg='#ffc917',
-                        borderwidth=1,
-                        relief="solid")
-    bottomframe = Frame(master=click2,
-                        bg='#ffc917')
+        topframe = Frame(master=click2,
+                         bg='#ffc917',
+                         width=800,
+                         height=50,
+                         pady=3)
+        centerframe = Frame(master=click2,
+                            bg='#ffc917',
+                            borderwidth=1,
+                            relief="solid")
+        bottomframe = Frame(master=click2,
+                            bg='#ffc917')
 
-    # layout van de main containers
-    click2.grid_rowconfigure(1, weight=1)
-    click2.grid_columnconfigure(0, weight=1)
+        # layout van de main containers
+        click2.grid_rowconfigure(1, weight=1)
+        click2.grid_columnconfigure(0, weight=1)
 
-    topframe.grid(row=0, sticky="ew")
-    centerframe.grid(row=1, sticky="nsew")
-    bottomframe.grid(row=2, sticky='ew')
+        topframe.grid(row=0, sticky="ew")
+        centerframe.grid(row=1, sticky="nsew")
+        bottomframe.grid(row=2, sticky='ew')
 
-    labelclick = Label(master=topframe,
-                       text='Actuele Vertrektijd - ' + str(userinput),
-                       background='#ffc917',
-                       foreground='#003082',
-                       font=('NS Sans', 21, 'bold'))
-    labelclick.grid(row=0, column=1)
+        labelclick = Label(master=topframe,
+                           text='Actuele Vertrektijd - ' + str(userinput),
+                           background='#ffc917',
+                           foreground='#003082',
+                           font=('NS Sans', 21, 'bold'))
+        labelclick.grid(row=0, column=1)
+        openutrecht(centerframe,userinput)
 
-    # counter = 2
-    # first = 0
-    # second = 1
-    # third = 2
-    openutrecht(centerframe,userinput)
-    # for vertrektijd in vertrektijden:
-    #     tijd = vertrektijd[0]
-    #     station = vertrektijd[1]
-    #     spoor = vertrektijd[2]
-    #     resultLabel = Label(master=centerframe, text=station)
-    #     resultLabel2 = Label(master=centerframe, text=spoor)
-    #     resultLabel3 = Label(master=centerframe, text=tijd)
-    #     resultLabel.grid(row=counter, column=first)
-    #     resultLabel2.grid(row=counter, column=second)
-    #     resultLabel3.grid(row=counter, column=third)
-    #     counter = 1 + counter
-    #     if counter == 20:
-    #         counter = 2
-    #         first = first + 3
-    #         second = second + 3
-    #         third = third + 3
-
-    # terugknop met een killfunctie
-    terug = Button(master=bottomframe,
-                   text='Terug',
-                   font=('NS Sans', 18, 'bold'),
-                   bg='#4B0082',
-                   fg='white',
-                   command=click2.destroy)
-    terug.grid(row=0, column=2)
+        terug = Button(master=bottomframe,
+                       text='Terug',
+                       font=('NS Sans', 18, 'bold'),
+                       bg='#4B0082',
+                       fg='white',
+                       command=click2.destroy)
+        terug.grid(row=0, column=2)
 
 
 # nieuw venster voor vertrektijden
