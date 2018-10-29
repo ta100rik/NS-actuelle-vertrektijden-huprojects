@@ -14,10 +14,10 @@ def api_request(station):
     lijst = []
     for vertrek in vertrekXML['ActueleVertrekTijden']['VertrekkendeTrein']:
         eindbestemming = vertrek['EindBestemming']
-
+        spoor = vertrek['VertrekSpoor']['#text']
         vertrektijd = vertrek['VertrekTijd']  # 2016-09-27T18:36:00+0200
         vertrektijd = vertrektijd[11:16]  # 18:36
-        lijst.append([vertrektijd,eindbestemming])
+        lijst.append([vertrektijd,eindbestemming,spoor])
         # print('Om ' + vertrektijd + ' vertrekt een trein naar ' + eindbestemming)
     return lijst
 
@@ -52,23 +52,42 @@ def clicked2(userinput):
     click2.configure(bg='#ffc917')
     click2.geometry("800x600")
     labelclick = Label(master=click2,
-                       text='Actuele Vertrektijd',
+                       text='Actuele Vertrektijd - ' + str(userinput),
                        background='#ffc917',
                        foreground='#003082',
                        font=('NS Sans', 21, 'bold'))
     labelclick.grid(row=0, column=1)
-
-    resultLabel= Label(master=click2, text='HOI MENSEN')
-    resultLabel.grid(row=1, column=1)
-
+    counter = 2
+    first = 0
+    second = 1
+    third = 2
+    for vertrektijd in vertrektijden:
+        tijd = vertrektijd[0]
+        station = vertrektijd[1]
+        spoor = vertrektijd[2]
+        # resultLabel= Label(master=click2, text=station)
+        # resultLabel2= Label(master=click2, text=spoor)
+        # resultLabel3= Label(master=click2, text=tijd)
+        resultLabel= Label(master=click2, text=station)
+        resultLabel2= Label(master=click2, text=spoor)
+        resultLabel3= Label(master=click2, text=tijd)
+        resultLabel.grid(row=counter, column=first)
+        resultLabel2.grid(row=counter, column=second)
+        resultLabel3.grid(row=counter, column=third)
+        counter = 1 + counter
+        if counter == 20:
+            counter = 2
+            first = first + 3
+            second = second + 3
+            third = third + 3
     # terugknop met een killfunctie
-    terug = Button(master=click2,
-                   text='Terug',
-                   font=('NS Sans', 18, 'bold'),
-                   bg='#4B0082',
-                   fg='white',
-                   command=click2.destroy)
-    terug.grid(row=3, column=1, pady=10)
+    # terug = Button(master=click2,
+    #                text='Terug',
+    #                font=('NS Sans', 18, 'bold'),
+    #                bg='#4B0082',
+    #                fg='white',
+    #                command=click2.destroy)
+    # terug.grid(row=counter, column=1, pady=10)
 
 
 # nieuw venster voor vertrektijden
