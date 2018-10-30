@@ -2,6 +2,10 @@ Dit is het Programming project
 
 Hierbij dus het ns systeem waarbij de reistijden van van een bepaald station kan worden aan gevraagd
 
+Allereest zul je een paar packages moeten installeren.
+dooe naar settings te gaan in pycharm en dan naar interpreter, vervolgens op het + icoontje klikken.
+Installeer de volgende packages: requests, xmltodict
+
 
 Op het programma te runnen druk je gewoon op het groene start knopje.
 Allereest zul je op het hoofdscherm terecht komen met 5 knoppen.
