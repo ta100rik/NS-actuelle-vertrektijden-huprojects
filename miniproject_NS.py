@@ -5,10 +5,14 @@ from tkinter import *
 from tkinter.messagebox import showinfo
 import tkinter as tk
 
+
+# error bij een foute invoer
 def error():
     bericht = 'Dit is geen station'
-    showinfo(title='Station',message=bericht)
+    showinfo(title='Station', message=bericht)
 
+
+# API aanroepen
 def api_request(station):
     try:
         auth_details = ('Farhad_sayghani@msn.com', 'r_MptU5smHBzB5wKFjw5q76-_6JVo1U9JU-PriJLYZnj4XnBfI7a7A')
@@ -21,12 +25,13 @@ def api_request(station):
             spoor = vertrek['VertrekSpoor']['#text']
             vertrektijd = vertrek['VertrekTijd']  # 2016-09-27T18:36:00+0200
             vertrektijd = vertrektijd[11:16]  # 18:36
-            lijst.append([vertrektijd,eindbestemming,spoor])
+            lijst.append([vertrektijd, eindbestemming, spoor])
             # print('Om ' + vertrektijd + ' vertrekt een trein naar ' + eindbestemming)
         return lijst
     except:
         error()
         return False
+
 
 # venster voor de niet gebruikte knoppen
 def clicked():
@@ -51,7 +56,9 @@ def clicked():
                    command=click.destroy)
     terug.pack(pady=10)
 
-def openutrecht(frame,userinput):
+
+# fucntie voor het aanroepen van API
+def openutrecht(frame, userinput):
     vertrektijden = api_request(userinput)
     if vertrektijden:
         counter = 2
@@ -63,17 +70,21 @@ def openutrecht(frame,userinput):
             station = vertrektijd[1]
             spoor = vertrektijd[2]
             resultLabel = Label(master=frame, text=station, bg='#ffc917', fg='#003082', font=('NS Sans', 12, 'bold'))
-            resultLabel2 = Label(master=frame, text=spoor, bg='#ffc917', fg='#003082', font=('NS Sans', 12, 'bold'))
-            resultLabel3 = Label(master=frame, text=tijd, bg='#ffc917', fg='#003082', font=('NS Sans', 12, 'bold'))
-            resultLabel.grid(row=counter, column=first)
-            resultLabel2.grid(row=counter, column=second)
-            resultLabel3.grid(row=counter, column=third)
+            resultLabel2 = Label(master=frame, text=spoor, bg='#003082', fg='#ffc917', font=('NS Sans', 12, 'bold'),
+                                 borderwidth=1, relief='solid')
+            resultLabel3 = Label(master=frame, text=tijd, bg='cyan', fg='black', font=('NS Sans', 12, 'bold'))
+            resultLabel.grid(row=counter, column=first, sticky='NE')
+            resultLabel2.grid(row=counter, column=second, sticky='NSEW')
+            resultLabel3.grid(row=counter, column=third, sticky='NSEW')
             counter = 1 + counter
             if counter == 20:
                 counter = 2
                 first = first + 3
                 second = second + 3
                 third = third + 3
+
+
+# klikfunctie voor stationsknoppen
 def clicked2(userinput):
     vertrektijden = api_request(userinput)
     if vertrektijden:
@@ -108,7 +119,7 @@ def clicked2(userinput):
                            foreground='#003082',
                            font=('NS Sans', 21, 'bold'))
         labelclick.grid(row=0, column=1)
-        openutrecht(centerframe,userinput)
+        openutrecht(centerframe, userinput)
 
         terug = Button(master=bottomframe,
                        text='Terug',
@@ -116,7 +127,7 @@ def clicked2(userinput):
                        bg='#4B0082',
                        fg='white',
                        command=click2.destroy)
-        terug.grid(row=0, column=2)
+        terug.grid(row=0, column=2, sticky="NSEW")
 
 
 # nieuw venster voor vertrektijden
@@ -124,7 +135,7 @@ def vertrektijden():
     actueel = tk.Toplevel(root)
     actueel.title("Actuele vertrektijden")
     actueel.configure(bg='#ffc917')
-    actueel.geometry('{}x{}'.format(1080, 700))
+    actueel.geometry('{}x{}'.format(1280, 700))
 
     # main containers
     topframe = Frame(master=actueel,
@@ -152,8 +163,6 @@ def vertrektijden():
 
     actueellabel.grid(row=0, column=2, columnspan=4, sticky='nsew')
 
-
-
     stationlabel = Label(master=topframe,
                          text='Van welk station wilt u \nde actuele vertrektijden?',
                          background='#ffc917',
@@ -165,15 +174,12 @@ def vertrektijden():
     centerframe.grid_rowconfigure(0, weight=1)
     centerframe.grid_columnconfigure(1, weight=1)
 
-   # ctr_left = Frame(centerframe, bg='#ffc917')
     ctr_mid = Frame(centerframe, bg='#ffc917', borderwidth=1, relief='solid')
-    openutrecht(ctr_mid,'utrecht')
+    openutrecht(ctr_mid, 'utrecht')
     ctr_right = Frame(centerframe, bg='#ffc917')
 
-    #ctr_left.grid(row=0, column=0, sticky="nw")
     ctr_mid.grid(row=0, column=1, sticky="nsew")
     ctr_right.grid(row=0, column=2, sticky="nw")
-
 
     # Entry voor het invoeren van gekozen station
 
@@ -196,22 +202,23 @@ def vertrektijden():
     mijnInvoer.focus()
     mijnInvoer.bind("<Return>")
     mijnInvoer.grid(row=2, column=1)
-    # Enter knop
+
+    # zoekknop
     enterEntry = Button(topframe, text='Zoeken',
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
                         command=lambda: clicked2(mijnInvoer.get()))
     enterEntry.grid(row=2, column=2)
-    # Right widgets
 
+    # Right widgets
     # Knoppen voor de steden
     amsterdam = Button(master=ctr_right,
                        text='Amsterdam',
                        font=('NS Sans', 12, 'bold'),
                        bg='#4B0082',
                        fg='white',
-                       command=lambda:clicked2('Amsterdam'),
+                       command=lambda: clicked2('Amsterdam'),
                        height=3,
                        width=10)
     amsterdam.grid(row=0, column=0)
@@ -221,7 +228,7 @@ def vertrektijden():
                        font=('NS Sans', 12, 'bold'),
                        bg='#4B0082',
                        fg='white',
-                       command=lambda:clicked2('Rotterdam'),
+                       command=lambda: clicked2('Rotterdam'),
                        height=3,
                        width=10)
     rotterdam.grid(row=0, column=1)
@@ -231,7 +238,7 @@ def vertrektijden():
                     font=('NS Sans', 12, 'bold'),
                     bg='#4B0082',
                     fg='white',
-                    command=lambda:clicked2('Arnhem'),
+                    command=lambda: clicked2('Arnhem'),
                     height=3,
                     width=10)
     arnhem.grid(row=1, column=0)
@@ -241,7 +248,7 @@ def vertrektijden():
                      font=('NS Sans', 12, 'bold'),
                      bg='#4B0082',
                      fg='white',
-                     command=lambda:clicked2('Utrecht'),
+                     command=lambda: clicked2('Utrecht'),
                      height=3,
                      width=10)
     utrecht.grid(row=1, column=1)
@@ -251,7 +258,7 @@ def vertrektijden():
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
-                        command=lambda:clicked2('Maastricht'),
+                        command=lambda: clicked2('Maastricht'),
                         height=3,
                         width=10)
     maastricht.grid(row=2, column=0)
@@ -261,7 +268,7 @@ def vertrektijden():
                            font=('NS Sans', 12, 'bold'),
                            bg='#4B0082',
                            fg='white',
-                           command=lambda:clicked2('\'s-Hertogenbosch'),
+                           command=lambda: clicked2('\'s-Hertogenbosch'),
                            height=3,
                            width=10)
     hertogenbosch.grid(row=2, column=1)
@@ -271,7 +278,7 @@ def vertrektijden():
                       font=('NS Sans', 12, 'bold'),
                       bg='#4B0082',
                       fg='white',
-                      command=lambda:clicked2('Almere'),
+                      command=lambda: clicked2('Almere'),
                       height=3,
                       width=10)
     lelystad.grid(row=3, column=0)
@@ -281,7 +288,7 @@ def vertrektijden():
                     font=('NS Sans', 12, 'bold'),
                     bg='#4B0082',
                     fg='white',
-                    command=lambda:clicked2('Zwolle'),
+                    command=lambda: clicked2('Zwolle'),
                     height=3,
                     width=10)
     zwolle.grid(row=3, column=1)
@@ -291,7 +298,7 @@ def vertrektijden():
                    font=('NS Sans', 12, 'bold'),
                    bg='#4B0082',
                    fg='white',
-                   command=lambda:clicked2('Assen'),
+                   command=lambda: clicked2('Assen'),
                    height=3,
                    width=10)
     assen.grid(row=4, column=0)
@@ -311,7 +318,7 @@ def vertrektijden():
                         font=('NS Sans', 12, 'bold'),
                         bg='#4B0082',
                         fg='white',
-                        command=lambda:clicked2('Leeuwarden'),
+                        command=lambda: clicked2('Leeuwarden'),
                         height=3,
                         width=10)
     leeuwarden.grid(row=5, column=0)
@@ -321,7 +328,7 @@ def vertrektijden():
                      font=('NS Sans', 12, 'bold'),
                      bg='#4B0082',
                      fg='white',
-                     command=lambda:clicked2('Den Haag'),
+                     command=lambda: clicked2('Den Haag'),
                      height=3,
                      width=10)
     denhaag.grid(row=5, column=1)
