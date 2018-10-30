@@ -19,3 +19,8 @@ En in het nieuwe venster wat geopenend wordt, zullen het spoor, bestemming en ti
 Indien je geen gebruik maakt van het zoekknopje maar van een van de stedenknoppen, dan gaat de api een request doen.
 En in het nieuwe venster wat geopenend wordt, zullen ook weer het spoor, bestemming en tijdstip vermeld worden 
 van je ingedrukte stedenknop
+
+mocht je toch een andere station willen, dan kun je op de terugknop drukken en deze zal je terugsturen naar het zoekscherm.
+
+Voor vragen of feedback kunt u mailen naar:
+Farsayghani@gmail.com
