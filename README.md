@@ -27,4 +27,4 @@ van je ingedrukte stedenknop
 mocht je toch een andere station willen, dan kun je op de terugknop drukken en deze zal je terugsturen naar het zoekscherm.
 
 Voor vragen of feedback kunt u mailen naar:
-Farsayghani@gmail.com / Zyadosseyran@gmail.com
+Zyadosseyran@gmail.com
